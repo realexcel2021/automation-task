@@ -16,11 +16,17 @@ jobs:
             - name: Checkout Codebase
               uses: actions/checkout@v4
 
+            - uses: benjlevesque/short-sha@v2.2
+              name: Get short sha
+              id: short-sha
+              with:
+                length: 6
+
             - uses: mr-smithers-excellent/docker-build-push@v6
               name: Build & push Docker image
               with:
                 image: ${{ env.DOCKER_IMAGE_NAME }}
-                tags: v1, latest
+                tags: ${{ steps.short-sha.outputs.sha }}
                 registry: docker.io
                 dockerfile: Dockerfile
                 username: ${{ secrets.DOCKER_USERNAME }}
