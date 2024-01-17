@@ -9,6 +9,6 @@ RUN npm run build
 
 FROM nginx:alpine
 WORKDIR /usr/share/nginx/html
-COPY --from=prod /app/build .
+COPY --from=prod /app/dist .
 # run nginx with global directives and daemon off
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
