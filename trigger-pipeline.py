@@ -55,37 +55,41 @@ def checkJobStatus(response_id):
 
         while workflow_id == "":
                 
-            r = requests.get(f"https://api.github.com/repos/{owner}/{repo}/actions/runs?created=%3E{run_date_filter}",
-                headers = authHeader)
-            runs = r.json()["workflow_runs"]
+            r = requests.get(f"https://api.github.com/repos/{OWNER}/{REPO}/actions/runs?created=%3E{run_date_filter}",
+                headers = headers) 
+            
+            print(r.status_code)
+            
 
-            if len(runs) > 0:
-                for workflow in runs:
-                    jobs_url = workflow["jobs_url"]
-                    print(f"get jobs_url {jobs_url}")
+        #     runs = r.json()["workflow_runs"]
 
-                    r = requests.get(jobs_url, headers= authHeader)
+        #     if len(runs) > 0:
+        #         for workflow in runs:
+        #             jobs_url = workflow["jobs_url"]
+        #             print(f"get jobs_url {jobs_url}")
+
+        #             r = requests.get(jobs_url, headers= headers)
                     
-                    jobs = r.json()["jobs"]
-                    if len(jobs) > 0:
-                        # we only take the first job, edit this if you need multiple jobs
-                        job = jobs[0]
-                        steps = job["steps"]
-                        if len(steps) >= 2:
-                            second_step = steps[1] # if you have position the run_identifier step at 1st position
-                            if second_step["name"] == run_identifier:
-                                workflow_id = job["run_id"]
-                        else:
-                            print("waiting for steps to be executed...")
-                            time.sleep(3)
-                    else:
-                        print("waiting for jobs to popup...")
-                        time.sleep(3)
-            else:
-                print("waiting for workflows to popup...")
-                time.sleep(3)
+        #             jobs = r.json()["jobs"]
+        #             if len(jobs) > 0:
+        #                 # we only take the first job, edit this if you need multiple jobs
+        #                 job = jobs[0]
+        #                 steps = job["steps"]
+        #                 if len(steps) >= 2:
+        #                     second_step = steps[1] # if you have position the run_identifier step at 1st position
+        #                     if second_step["name"] == run_identifier:
+        #                         workflow_id = job["run_id"]
+        #                 else:
+        #                     print("waiting for steps to be executed...")
+        #                     time.sleep(3)
+        #             else:
+        #                 print("waiting for jobs to popup...")
+        #                 time.sleep(3)
+        #     else:
+        #         print("waiting for workflows to popup...")
+        #         time.sleep(3)
 
-        print(f"workflow_id: {workflow_id}")
+        # print(f"workflow_id: {workflow_id}")
 
     else:
         print("Build didn't get triggered")
