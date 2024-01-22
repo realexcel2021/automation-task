@@ -5,6 +5,10 @@ on:
     workflow_dispatch:
       branches:
         - master
+      inputs:
+        id:
+          description: 'run identifier'
+          required: false
 
 env:
     DOCKER_IMAGE_NAME: sheriffexcel/vite-app

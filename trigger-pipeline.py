@@ -19,7 +19,7 @@ ACTION = 'build-image.yml'
 
 # trigger a workflow dispatch
 GHA_API = f"https://api.github.com/repos/{OWNER}/{REPO}/actions/workflows/{WORKFLOW_ID}/dispatches"
-GHA_API_TOKEN = "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"
+GHA_API_TOKEN = "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"
 GHA_OBJ = {
     "ref":"master",
     "inputs": {
@@ -35,7 +35,7 @@ headers = {
 # trigger workflow dispatch
 trigger_build = requests.post(GHA_API, json=GHA_OBJ, headers=headers)
 
-print(f"dispatch workflow status: {trigger_build.status_code} | workflow identifier: {run_identifier}")
+print(f"dispatch workflow status: {trigger_build.text} | workflow identifier: {run_identifier}")
 
 def checkJobStatus(response_id):
     if response_id == 204:
@@ -61,35 +61,35 @@ def checkJobStatus(response_id):
             print(r.status_code)
             
 
-        #     runs = r.json()["workflow_runs"]
+            runs = r.json()["workflow_runs"]
 
-        #     if len(runs) > 0:
-        #         for workflow in runs:
-        #             jobs_url = workflow["jobs_url"]
-        #             print(f"get jobs_url {jobs_url}")
+            if len(runs) > 0:
+                for workflow in runs:
+                    jobs_url = workflow["jobs_url"]
+                    print(f"get jobs_url {jobs_url}")
 
-        #             r = requests.get(jobs_url, headers= headers)
+                    r = requests.get(jobs_url, headers= headers)
                     
-        #             jobs = r.json()["jobs"]
-        #             if len(jobs) > 0:
-        #                 # we only take the first job, edit this if you need multiple jobs
-        #                 job = jobs[0]
-        #                 steps = job["steps"]
-        #                 if len(steps) >= 2:
-        #                     second_step = steps[1] # if you have position the run_identifier step at 1st position
-        #                     if second_step["name"] == run_identifier:
-        #                         workflow_id = job["run_id"]
-        #                 else:
-        #                     print("waiting for steps to be executed...")
-        #                     time.sleep(3)
-        #             else:
-        #                 print("waiting for jobs to popup...")
-        #                 time.sleep(3)
-        #     else:
-        #         print("waiting for workflows to popup...")
-        #         time.sleep(3)
+                    jobs = r.json()["jobs"]
+                    if len(jobs) > 0:
+                        # we only take the first job, edit this if you need multiple jobs
+                        job = jobs[0]
+                        steps = job["steps"]
+                        if len(steps) >= 2:
+                            second_step = steps[1] # if you have position the run_identifier step at 1st position
+                            if second_step["name"] == run_identifier:
+                                workflow_id = job["run_id"]
+                        else:
+                            print("waiting for steps to be executed...")
+                            time.sleep(3)
+                    else:
+                        print("waiting for jobs to popup...")
+                        time.sleep(3)
+            else:
+                print("waiting for workflows to popup...")
+                time.sleep(3)
 
-        # print(f"workflow_id: {workflow_id}")
+        print(f"workflow_id: {workflow_id}")
 
     else:
         print("Build didn't get triggered")
