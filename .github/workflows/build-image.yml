@@ -3,6 +3,8 @@ name: Build and Push Image
 
 on:
     workflow_dispatch:
+      branches:
+        - master
 
 env:
     DOCKER_IMAGE_NAME: sheriffexcel/vite-app

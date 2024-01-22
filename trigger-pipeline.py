@@ -14,7 +14,7 @@ run_date_filter = (datetime.datetime.utcnow()-delta_time).strftime("%Y-%m-%dT%H:
 WORKFLOW_ID = "build-image.yml"
 OWNER = "realexcel2021"
 REPO = "automation-task"
-BRANCH = 'main'
+BRANCH = 'master'
 ACTION = 'build-image.yml'
 
 # trigger a workflow dispatch
