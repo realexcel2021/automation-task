@@ -96,9 +96,9 @@ def getjobID(response_id):
 def getImageUrl():
 
     # request todockerhub api
-    DOCKER_ACCESS_TOKEN = os.environ["DOCKER_ACCESS_TOKEN"] #"dckr_pat_F6lBFiy6gjJxKX7s7vg14eU3Zpc"
-    namespace = "sheriffexcel"
-    repository = "vite-app"
+    DOCKER_ACCESS_TOKEN = os.environ["DOCKER_ACCESS_TOKEN"] 
+    namespace = "sheriffexcel" # replace this with your dockerhub user name
+    repository = "vite-app" # replace this with your dockerhub repo name
     api_url = f"https://hub.docker.com/v2/namespaces/{namespace}/repositories/{repository}/tags"
     api_headers = {
     'Content-Type': 'application/json',
